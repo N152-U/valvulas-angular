@@ -1,0 +1,190 @@
+<div class="card centrar">
+    <h5>Registro Diario Movimientos</h5>
+
+    <div class="card-body">
+
+        <p-toolbar styleClass="p-mb-4">
+            <ng-template pTemplate="left">
+
+                <p-button [routerLink]="['/valve/table']" icon="pi pi-table" styleClass="p-button-sm p-button-raised p-button-warning" label="Catalogo de Válvulas" [style]="{'margin-left': '.4em'}"></p-button>
+            </ng-template>
+            <ng-template pTemplate="right">
+                <p-button [routerLink]="['/valve/register']" icon="pi pi-plus" styleClass="p-button-sm p-button-raised p-button-secondary" label="Agregar nueva válvula" [style]="{'margin-left': '.4em'}"></p-button>
+
+            </ng-template>
+        </p-toolbar>
+
+        <p-toolbar styleClass="p-mb-4" class="valve_movement_search">
+            <ng-template pTemplate="left">
+                <div class="p-fluid p-grid">
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="firstname1">Id</label>
+                        <input [style]="{'width':'100%'}" pInputText type="number" (input)="dt1.filter($event.target.value,'valves_id','contains' )" [value]="$any(dt1.filters['valves_id'])?.value" placeholder="Busqueda por Id de la válvula" class="p-column-filter p-inputtext-sm"
+                        />
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="lastname1">Sector</label>
+                        <input [style]="{'width':'100%'}" pInputText type="text" (input)="dt1.filter($event.target.value,'valf.sector.cve_sec','contains' )" [value]="$any(dt1.filters['valf.sector.cve_sec'])?.value" placeholder="Busqueda por sector" class="p-column-filter p-inputtext-sm"
+                        />
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="lastname1">Motivo</label>
+                        <p-dropdown placeholder="Motivo" [options]="reason" [style]="{'width':'100%'}" appendTo="body" (onChange)="dt1.filter($event.value, 'reason.id', 'contains')" optionLabel="reason" [filter]="true" [showClear]="true" class="p-column-filter p-inputtext-sm"
+                            placeholder="Selecciona la acción"></p-dropdown>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="lastname1">Acción</label>
+                        <p-dropdown [options]="actions" [style]="{'width':'100%'}" appendTo="body" (onChange)="dt1.filter($event.value, 'actions.id', 'contains')" optionLabel="name" [filter]="true" [showClear]="true" class="p-column-filter p-inputtext-sm" placeholder="Selecciona la acción">
+                            <ng-template let-status pTemplate="item">
+                                <div class="status-item">
+                                    <div>{{ status.name }}</div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="lastname1">Status</label>
+                        <p-dropdown [options]="movementStatus" [style]="{'width':'100%'}" appendTo="body" (onChange)="dt1.filter($event.value, 'movementStatus.id', 'contains')" optionLabel="name" [filter]="true" [showClear]="true" class="p-column-filter p-inputtext-sm" placeholder="Selecciona un estado">
+                            <ng-template let-status pTemplate="item">
+                                <div class="status-item">
+                                    <div>{{ status.name }}</div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                    </div>
+                </div>
+            </ng-template>
+        </p-toolbar>
+        <p-table styleClass="p-datatable-sm p-datatable-striped p-datatable-responsive-demo p-datatable-gridlines" #dt1 [value]="valveMovementTodayDate" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} resultados"
+            [scrollable]="true" dataKey="id" scrollHeight="500px" [style]="{ width: '100%' }" [rowsPerPageOptions]="[2,10,25]" [lazy]="true" (onLazyLoad)="getByToday($event)" totalRecords="{{totalRecords}}" [loading]="loadingTable">
+
+            <ng-template pTemplate="colgroup" let-columns>
+                <colgroup class="valve_responsive">
+                    <col style="width:120px">
+                    <col style="width:120px">
+                    <col style="width:150px">
+                    <col style="width:150px">
+                    <col style="width:170px">
+                    <col style="width:120px">
+                    <col style="width:150px">
+                    <col style="width:120px">
+                    <col style="width:120px">
+                    <col style="width:200px">
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header" let-rowData="rowData">
+                <tr>
+                    <th style="text-align: center">
+                        Id Valvula
+                    </th>
+                    <th style="text-align: center">
+                        Sector
+                    </th>
+                    <th style="text-align: center">
+                        Motivo
+                    </th>
+                    <th style="text-align: center">
+                        Acción
+                    </th>
+                    <th style="text-align: center">
+                        Status
+                    </th>
+                    <th style="text-align: center">
+                        Vueltas
+                    </th>
+                    <th style="text-align: center">
+                        Observaciones
+                    </th>
+                    <th style="text-align: center">
+                        Creador
+                    </th>
+                    <th style="text-align: center">
+                        Editor
+                    </th>
+                    <th style="text-align: center">
+                        Detalles
+                    </th>
+                </tr>
+
+                <tr>
+
+                    <th>
+                        <input [style]="{'width':'100%'}" pInputText type="number" (input)="dt1.filter($event.target.value,'valves_id','contains' )" [value]="$any(dt1.filters['valves_id'])?.value" placeholder="Busqueda por Id de la válvula" class="p-column-filter p-inputtext-sm"
+                        />
+                    </th>
+                    <th>
+                        <input [style]="{'width':'100%'}" pInputText type="text" (input)="dt1.filter($event.target.value,'valf.sector.cve_sec','contains' )" [value]="$any(dt1.filters['valf.sector.cve_sec'])?.value" placeholder="Busqueda por sector" class="p-column-filter p-inputtext-sm"
+                        />
+                    </th>
+                    <th>
+                        <p-dropdown class="p-column-filter p-inputtext-sm" placeholder="Motivo" [options]="reason" [style]="{'width':'100%'}" appendTo="body" (onChange)="dt1.filter($event.value, 'reason.id', 'contains')" optionLabel="reason" [filter]="true" [showClear]="true"
+                            placeholder="Selecciona la acción"></p-dropdown>
+                    </th>
+                    <th>
+                        <p-dropdown class="p-column-filter p-inputtext-sm" [options]="actions" [style]="{'width':'100%'}" appendTo="body" (onChange)="dt1.filter($event.value, 'actions.id', 'contains')" optionLabel="name" [filter]="true" [showClear]="true" placeholder="Selecciona la acción">
+                            <ng-template let-status pTemplate="item">
+                                <div class="status-item">
+                                    <div>{{ status.name }}</div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                    </th>
+                    <th>
+                        <p-dropdown class="p-column-filter p-inputtext-sm" [options]="movementStatus" [style]="{'width':'100%'}" appendTo="body" (onChange)="dt1.filter($event.value, 'movementStatus.id', 'contains')" optionLabel="name" [filter]="true" [showClear]="true" placeholder="Selecciona un estado">
+                            <ng-template let-status pTemplate="item">
+                                <div class="status-item">
+                                    <div>{{ status.name }}</div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                    </th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-valve>
+                <tr [pSelectableRow]="valve">
+                    <td style="text-align: center;">{{ valve.valves_id }}</td>
+                    <td style="text-align: center;">{{ valve["valf.sector.cve_sec"]}}</td>
+                    <td style="text-align: center;">{{ valve["reason.reason"]}}</td>
+                    <td style="text-align: center;">
+                        <div *ngIf="valve.action === true">
+                            <span style="color: white;" class="badge {{ valve.action === true ? 'bg-danger' : 'bg-danger' }}">{{valve.action === true  ? "Cierre" : "" }}</span>
+                        </div>
+                        <div style="color: white;" *ngIf="valve.action === false">
+                            <span class="badge {{ valve.action === false ? 'bg-warning' : 'bg-info' }}">{{ valve.action === false ? "Apertura" : "" }}</span>
+                        </div>
+                    </td>
+                    <td style="text-align: center;">
+                        <div *ngIf="valve.full === '1'">Abierto Completamente</div>
+                        <div *ngIf="valve.full === '2'">Flujo Regulado</div>
+                        <div *ngIf="valve.full === '3'">Cerrado Completamente</div>
+                    </td>
+                    <td style="text-align: center;">{{ valve.turns }}</td>
+                    <td style="text-align: center;">{{ valve.observation }}</td>
+                    <td style="text-align: center;">{{ valve["creator.username"] }}</td>
+                    <td style="text-align: center;">{{ valve["updator.username"] }}</td>
+                    <td style="text-align:center">
+                        <button pButton pRipple icon="pi pi-list" class="p-button-rounded p-button-help p-mr-2" [routerLink]="['/valve/Detail', valve.valves_id]"></button> &nbsp;
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-warning p-mr-2" [routerLink]="['/valveMovement/valvesActionEdit',  valve.id]"></button>
+                        <!--  <button pButton pRipple class="p-button-sm p-button-secondary p-mr-1 p-button-sm " [routerLink]="['/valve/Detail', valve.valves_id]" style="background-color: #6e8a87; border-color:#6e8a87; text-align: center; font-size: 12px;"></button> -->
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td [attr.colspan]="9">
+                        No se encontraron registros.
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorleft"> </ng-template>
+            <ng-template pTemplate="paginatorright"> </ng-template>
+        </p-table>
+    </div>
+</div>
+<!-- 
+<a href="http://valvulas.sacmex.cdmx.gob.mx/pdfs/Planos%20PDF%20Iztapalapa%2019/Planos%20PDF%20Iztapalapa%2019/YDRAY-PR-SEC-13-4-AB_1-de-2-13-3.pdf" target="_blank">Download</a> -->

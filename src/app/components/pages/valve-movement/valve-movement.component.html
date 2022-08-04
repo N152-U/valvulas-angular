@@ -1,0 +1,90 @@
+<div class="cardF">
+    <p-card>
+        <h4 style="text-align:center;">Acciones</h4>
+        <p-divider>Datos de válvula</p-divider>
+
+        <form (ngSubmit)="createValvesMovement()" [formGroup]="aFormGroup" class="needs-validation center" novalidate>
+            <div style="padding: 2%;">
+                <ul>
+                    <li>Alcaldía: {{ valves['settlement.settlement_municipality.municipality'] }}</li>
+                    <li *ngIf="valves['sector.cve_sec'] === 'Sin sector'"> Sector: {{valves['sector.cve_sec']}}</li>
+                    <li *ngIf="valves['sector.cve_sec']">Sector: {{valves['sector.cve_sec']}} </li>
+                    <li>Colonia: {{ valves['settlement.settlement'] }}</li>
+                    <li>Calle: {{ valves.street }}</li>
+                    <li>Tipo de Red: {{ valves['road.type'] }}</li>
+                    <li>Ubicación: {{ valves['valves_location.location'] }}</li>
+                    <li>Diámetro: {{ valves['diameter.diameter']}} "</li>
+                    <li>Tipo de Valvula: {{ valves['valves_type.type'] }}</li>
+                    <li *ngIf="valves['directionClose'] === true"> Dirección de cierre: Izquierda</li>
+                    <li *ngIf="valves['directionClose'] === false">Dirección de cierre: Derecha</li>
+                </ul>
+            </div>
+            <p-divider></p-divider>
+            <br>
+            <div class="p-fluid p-grid">
+
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="dropdown">Apertura o Cierre *</label>
+                    <p-dropdown placeholder="Apertura o Cierre" [options]="actions" inputId="dropdown" [autoDisplayFirst]="false" optionLabel="name" formControlName="action" [class]="{
+                                'is-invalid':
+                                action.invalid && (action.dirty || action.touched),
+                                'is-valid': action.valid
+                              }"></p-dropdown>
+                    <div *ngIf="action.invalid && (action.dirty || action.touched)" class="invalid-feedback">
+                        <div *ngIf="action.errors.required">El campo es obligatorio</div>
+                    </div>
+                </div>
+
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="dropdown">Motivo *</label>
+                    <p-dropdown placeholder="Motivo" [options]="reason" inputId="dropdown" [autoDisplayFirst]="false" optionLabel="reason" formControlName="reasonId" [class]="{
+                                'is-invalid':
+                                reasonId.invalid && (reasonId.dirty || reasonId.touched),
+                                'is-valid': reasonId.valid
+                              }"></p-dropdown>
+                    <div *ngIf="reasonId.invalid && (reasonId.dirty || reasonId.touched)" class="invalid-feedback">
+                        <div *ngIf="reasonId.errors.required">El campo es obligatorio</div>
+                    </div>
+                </div>
+
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="inputtext">Otra(Si selecciona Otra llenar el Campo)</label>
+                    <input placeholder="Otra" type="text" id="inputtext" pInputText formControlName="otherReasons">
+                </div>
+
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="inputtext">N.de Vueltas *</label>
+                    <input placeholder="N. de Vueltas" maxlength="3" [pKeyFilter]="blockSpecial" id="inputtext" pInputText formControlName="turns" [class]="{
+                        'is-invalid':
+                        turns.invalid && (turns.dirty || turns.touched),
+                        'is-valid': turns.valid
+                      }">
+                    <div *ngIf="turns.invalid && (turns.dirty || turns.touched)" class="invalid-feedback">
+                        <div *ngIf="turns.errors.required">El campo es obligatorio</div>
+                    </div>
+                </div>
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="textarea">Observaciones </label>
+                    <textarea placeholder="Observaciones" inputId="textarea" rows="3" style="resize: none;" cols="30" pInputTextarea formControlName="observation"></textarea>
+                </div>
+
+                <div class="p-field p-col-12 p-md-3 p-field-radiobutton">
+                    <p-checkbox name="groupname" value="1" formControlName="full"></p-checkbox>
+
+                    <label for="full">Abierto Completamente</label>
+                </div>
+
+                <div class="p-field p-col-12 p-md-3 p-field-radiobutton">
+                    <p-checkbox name="groupname" value="3" formControlName="full"></p-checkbox>
+                    <label for="full">Cerrado Completamente</label>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end">
+                <p-button type="submit" label="Guardar" icon="pi pi-check" styleClass="p-button-sm p-button-success">
+                </p-button>
+                <p-button [routerLink]="['/valve/Detail/',valves.id]" label="Cancelar" icon="pi pi-times" styleClass="p-button-sm p-button-danger" [style]="{'margin-left': '.4em'}"></p-button>
+            </div>
+        </form>
+    </p-card>
+</div>

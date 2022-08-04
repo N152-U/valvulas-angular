@@ -1,0 +1,178 @@
+<p-card>
+    
+    <p-card>
+    
+
+
+<div class="cardF">
+    <div class="">
+        <form (ngSubmit)="getData()" [formGroup]="aFormGroup" class="needs-validation center" novalidate>
+            <div class="p-fluid p-grid p-formgrid">
+                <div class="p-field p-col-12 p-md-3">
+                    <label class="control-label">Fecha Inicial</label>
+                    <p-calendar [showIcon]="true" inputId="icon" formControlName="startDate"></p-calendar>
+                </div>
+                <div class="p-field p-col-12 p-md-3">
+                    <label class="control-label">Fecha Final</label>
+                    <p-calendar [showIcon]="true" inputId="icon" formControlName="endDate"></p-calendar>
+                </div>
+                <div class="p-field p-col-12 p-md-3">
+                    <label class="control-label">Estatus</label>
+                    <p-dropdown placeholder="Apertura o Cierre" [options]="actions" inputId="dropdown" [autoDisplayFirst]="false" optionLabel="name" formControlName="action"></p-dropdown>
+                </div>
+                <div class="p-field p-col-12 p-md-2">
+                    <label class="control-label" style="color: rgba(0, 255, 255, 0);">Estatus</label>
+                    <button pButton type="button" label="Click"></button>
+                    <!-- <a id="search" href="#!" class="btn btn-primary btn-labeled"><i class="pli-wizard btn-label"></i> Buscar datos</a> -->
+                </div>
+            </div>
+        </form>
+        <div class="p-fluid p-grid p-formgrid">
+            <div class="p-field p-col-12 p-md-3">
+                <label class="control-label">Subcapa</label>
+                <p-dropdown placeholder="Subcapa" [options]="sublayer" inputId="dropdown" [autoDisplayFirst]="false" optionLabel="name" (onChange)="sublayerChanged()" formControlName="sublayerId">
+
+
+                    <ng-template let-item pTemplate="selectedSublayer">
+                        <div class="sublayer-sublayer sublayer-item-value" *ngIf="selectedSublayer">
+                            <div>{{ selectedSublayer }}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-sublayer pTemplate="sublayer">
+                        <div class="sublayer-item">
+                            <div>{{ sublayer.name }}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+            <div class="p-field p-col-12 p-md-3">
+                <label>Alcaldía*</label>
+                <p-dropdown #ddmunicipality [options]="municipality" [style]="{ width: '100%' }" scrollHeight="400px" id="municipalityId" optionLabel="municipality" formControlName="municipalityId" [filter]="true" filterBy="municipality" name="municipalityId" [showClear]="true"
+                    placeholder="Seleccione Alcaldía" (onChange)="municipalityChanged()" [class]="{
+                        
+                      }">
+                    <ng-template let-item pTemplate="selectedMunicipality">
+                        <div class="municipality-municipality municipality-item-value" *ngIf="selectedMunicipality">
+                            <div>{{ selectedMunicipality }}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-municipality pTemplate="municipality">
+                        <div class="municipality-item">
+                            <div>{{ municipality.municipality }}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+
+            </div>
+
+            <div class="p-field p-col-12 p-md-3">
+                <label *ngIf="sublayerId">Sector o Colonia</label> {{sublayerId}}
+                <p-dropdown #ddsettlements [style]="{ width: '100%' }" [options]="settlements" scrollHeight="400px" optionLabel="settlement" [filter]="true" filterBy="settlement" name="settlementId" [showClear]="true" placeholder="Seleccione colonia" formControlName="settlementId">
+                    <ng-template let-item pTemplate="selectedSettlement">
+                        <div class="settlement-settlement municipality-item-value" *ngIf="selectedSettlement">
+                            <div>{{ selectedSettlement }}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-settlement pTemplate="settlement">
+                        <div class="settlement-item">
+                            <div>{{ settlement.settlement }}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+            <div class="p-field p-col-12 p-md-2">
+                <label class="control-label" style="color: rgba(0, 255, 255, 0);">Estatus</label>
+                <button pButton type="button" label="Limpiar filtros"></button>
+                <!-- <a id="search" href="#!" class="btn btn-primary btn-labeled"><i class="pli-wizard btn-label"></i> Buscar datos</a> -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="panel col-md-12">
+                <div class="panel-body">
+                    <div class="col-md-12">
+
+
+                    </div>
+                    <br>
+                    <!-- <div class="row">
+
+                        <div class="col-lg-2">
+                            <label class="control-label">Subcapa</label>
+                            <select id="sublayer_id" class="form-control select2 filter" data-placeholder="Selecciona una subcapa">
+                      <option value="1" selected>Colonias</option>
+                      <option value="2">Sectores</option>
+                  </select>
+
+                        </div>
+
+                        <div class="col-lg-2">
+                            <label class="control-label">Alcaldía</label>
+                            <select id="municipality_id" name="municipality_id" class="form-control select2 filter" data-placeholder="Selecciona una Alcaldía">
+                  <option value=""></option>
+                
+                  <option value="" 
+                     >
+                    
+                  </option>
+            
+                  </select>
+                        </div>
+
+                        <div class="col-lg-6" id="subcapas">
+
+                            <p class="settlement_shape_box">
+                                <label class="control-label settlement_shape_box">Colonias</label>
+                                <select id="settlement_shape_id" name="settlement_shape_id[]" class="form-control select2 filter settlement_shape_box" data-placeholder="Selecciona una Colonia" multiple>
+  
+  
+                      </select>
+                            </p>
+                            <p class="sector_shape_box" style="display: none">
+                                <label class="control-label sector_shape_box">Sectores</label>
+                                <select id="sector_shape_id" name="sector_shape_id[]" class="form-control select2 filter sector_shape_box" data-placeholder="Selecciona un Sector" multiple>
+  
+                      </select>
+                            </p>
+                        </div>
+                        <div class="col-lg-2">
+                            <br>
+                            <a id="clear_filters" href="#!" class="btn btn-purple btn-labeled"><i class="pli-eraser btn-label"></i> Limpiar filtros</a>
+
+
+                        </div>
+                    </div> -->
+                    <br>
+                    <section id="loading">
+                        <div id="loading-content"></div>
+                        <div id="loading-message" hidden>PROCESANDO RESULTADOS</div>
+                    </section>
+
+
+                    <section id="error">
+                        <div id="error-content"></div>
+                        <div id="error-message" hidden>HA OCURRIDO UN ERROR</div>
+                    </section>
+                    <div class="p-d-flex p-jc-center">
+                        <div class="col-md-8 ">
+                            <div id="viewDiv" class=" text-align: center;">
+                                <app-esri-map [center]="mapCenter" [basemap]="basemapType" [zoom]="mapZoomLevel" (mapLoadedEvent)="mapLoadedEvent($event)">
+                                </app-esri-map>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-d-flex p-jc-center">
+                        <div class="col-md-4">
+                            <div id="gridDisplay">
+                                <span id="info" class="info"></span>
+                                <div id="grid"></div>
+                                <div style="height: 800px;" id="tableDiv"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

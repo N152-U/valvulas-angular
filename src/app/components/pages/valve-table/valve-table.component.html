@@ -1,0 +1,126 @@
+<div class="card centrar">
+    <h5>Catalogo de Válvulas</h5>
+    <div class="card-body">
+        <p-toolbar styleClass="p-mb-4">
+            <ng-template pTemplate="left">
+                <p-button [routerLink]="['home']" icon="pi pi-home" styleClass="p-button-sm p-button-raised" label="Registro Diario" [style]="{'margin-left': '.4em'}"></p-button>
+            </ng-template>
+            <ng-template pTemplate="right">
+                <p-button [routerLink]="['/valve/register']" icon="pi pi-plus" styleClass="p-button-sm p-button-raised p-button-secondary" label="Agregar nueva válvula" [style]="{'margin-left': '.4em'}"></p-button>
+            </ng-template>
+        </p-toolbar>
+
+        <p-toolbar styleClass="p-mb-4" class="valve_search">
+            <ng-template pTemplate="left">
+                <div class="p-fluid p-grid">
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="firstname1">Alcaldía</label>
+                        <input pInputText type="text" (input)="dt1.filter($event.target.value, 'settlement.settlement_municipality.municipality', 'contains')" [value]="$any(dt1.filters['settlement.settlement_municipality.municipality'])?.value" placeholder="Busqueda por Alcaldía"
+                            class="p-column-filter p-inputtext-sm">
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="lastname1">Colonia</label>
+                        <input pInputText type="text" (input)="dt1.filter($event.target.value, 'settlement.settlement', 'contains')" [value]="$any(dt1.filters['settlement.settlement'])?.value" placeholder="Busqueda por Colonia" class="p-column-filter p-inputtext-sm">
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="lastname1">Sectores</label>
+                        <input pInputText type="text" (input)="dt1.filter($event.target.value, 'settlement.settlement', 'contains')" [value]="$any(dt1.filters['settlement.settlement'])?.value" placeholder="Busqueda por Colonia" class="p-column-filter p-inputtext-sm">
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="lastname1">Calle</label>
+                        <input pInputText type="text" (input)="dt1.filter($event.target.value, 'street', 'contains')" [value]="$any(dt1.filters['street'])?.value" placeholder="Busqueda por Colonia" class="p-column-filter p-inputtext-sm">
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="lastname1">Fecha</label>
+                        <input pInputText type="text" (input)="dt1.filter($event.target.value, 'createAtnew', 'contains')" [value]="$any(dt1.filters['createAtnew'])?.value" placeholder="AAAA-MM-DD" class="p-column-filter p-inputtext-sm">
+                    </div>
+                </div>
+            </ng-template>
+        </p-toolbar>
+
+        <p-table styleClass="p-datatable-sm p-datatable-striped p-datatable-responsive-demo p-datatable-gridlines" #dt1 [value]="valveDate" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" currentPageReportTemplate="Registros del {first} al {last} de {totalRecords} Registros"
+            [scrollable]="true" dataKey="id" scrollHeight="500px" [style]="{ width: '100%' }" [rowsPerPageOptions]="[5,10,20]" [lazy]="true" (onLazyLoad)="loadValves($event)" totalRecords="{{totalRecords}}" [loading]="loadingTable">
+            <ng-template pTemplate="colgroup" let-columns>
+                <colgroup class="valve_responsive">
+                    <col style="width:80px">
+                    <col style="width:170px">
+                    <col style="width:170px">
+                    <col style="width:170px">
+                    <col style="width:170px">
+                    <col style="width:120px">
+                    <col style="width:150px">
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header" let-rowData="rowData">
+                <tr>
+                    <th style="text-align: center;">Valvula Id
+                    </th>
+                    <th style="text-align: center;">Alcaldía
+                    </th>
+                    <th style="text-align: center;">Colonia
+                    </th>
+                    <th style="text-align: center;">Sector
+                    </th>
+                    <th style="text-align: center;">Calle
+                    </th>
+                    <th style="text-align: center;">Fecha
+                    </th>
+                    <th style="text-align: center;">Acciones</th>
+
+                </tr>
+
+                <tr>
+                    <th></th>
+                    <th>
+                        <input [style]="{'width':'100%'}" pInputText type="text" (input)="dt1.filter($event.target.value, 'settlement.settlement_municipality.municipality', 'contains')" [value]="$any(dt1.filters['settlement.settlement_municipality.municipality'])?.value" placeholder="Busqueda por Alcaldía"
+                            class="p-column-filter p-inputtext-sm">
+                    </th>
+                    <th>
+                        <input [style]="{'width':'100%'}" pInputText type="text" (input)="dt1.filter($event.target.value, 'settlement.settlement', 'contains')" [value]="$any(dt1.filters['settlement.settlement'])?.value" placeholder="Busqueda por Colonia" class="p-column-filter p-inputtext-sm">
+                    </th>
+                    <th>
+                        <input [style]="{'width':'100%'}" pInputText type="text" (input)="dt1.filter($event.target.value, 'sector.cve_sec', 'contains')" [value]="$any(dt1.filters['sector.cve_sec'])?.value" placeholder="Busqueda por Sector" class="p-column-filter p-inputtext-sm">
+                    </th>
+                    <th>
+                        <input [style]="{'width':'100%'}" pInputText type="text" (input)="dt1.filter($event.target.value, 'street', 'contains')" [value]="$any(dt1.filters['street'])?.value" placeholder="Busqueda por calle" class="p-column-filter p-inputtext-sm">
+                    </th>
+                    <th>
+                        <input [style]="{'width':'100%'}" pInputText type="text" (input)="dt1.filter($event.target.value, 'createAtnew', 'contains')" [value]="$any(dt1.filters['createAtnew'])?.value" placeholder="Busqueda por Fecha AAAA-MM-DD" class="p-column-filter p-inputtext-sm">
+                    </th>
+                    <th></th>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-valve let-i>
+                <tr [pSelectableRow]="valve">
+
+                    <td style="text-align: center;">{{valve.id}}</td>
+                    <td>{{valve.settlement.settlement_municipality.municipality}}</td>
+                    <td>{{valve.settlement.settlement}}</td>
+                    <td style="text-align: center;">
+                        {{valve.sector?.cve_sec }}
+                    </td>
+                    <td>{{valve.street}}</td>
+                    <td>{{valve.createAtnew}}</td>
+                    <td style="text-align: center;">
+                        <button pButton pRipple icon="pi pi-plus" class="p-button-rounded p-mr-2" [routerLink]="['/valveMovement/registervalvesAction', valve.id]"></button> &nbsp;
+                        <button pButton pRipple icon="pi pi-list" class="p-button-rounded p-button-help p-mr-2" [routerLink]="['/valve/Detail', valve.id]"></button> &nbsp;
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-warning p-mr-2" [routerLink]="['/valve/edit', valve.id]"></button> &nbsp;
+                        <button *ngIf="valve.count === 0" style="align-items: center; text-align: center;" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger  p-mr-2" (click)="deleteValve(valve, i)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td [attr.colspan]="9">
+                        No se encontraron registros.
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorleft">
+            </ng-template>
+            <ng-template pTemplate="paginatorright">
+            </ng-template>
+        </p-table>
+    </div>
+</div>

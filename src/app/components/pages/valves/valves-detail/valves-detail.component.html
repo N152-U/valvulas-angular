@@ -1,0 +1,165 @@
+<div class="cardF">
+    <p-card>
+        <h5 style="text-align: center"> Detalle de la Válvula con Id: {{ valve?.id}}
+        </h5>
+        <p-toolbar styleClass="p-mb-4">
+            <ng-template pTemplate="left">
+                <p-button [routerLink]="['/valve/table']" icon="pi pi-arrow-left" styleClass="p-button-sm p-button-raised" label="Regresar" [style]="{'margin-left': '.4em'}"></p-button>
+            </ng-template>
+            <ng-template pTemplate="right" *ngIf="totalMovements == 0">
+                <p-button [routerLink]="['/valve/edit', valve.id]" icon="pi pi-pencil" styleClass="p-button-sm p-button-warning" label="Editar Válvula" [style]="{'margin-left': '.4em'}"></p-button>
+            </ng-template>
+        </p-toolbar>
+        <p-divider></p-divider>
+
+        <div style="text-align: center; font-weight: bold">
+            Ubicación de la Valvula
+        </div>
+        <br />
+        <ul>
+            <li>Alcaldía: {{ valve['settlement.settlement_municipality.municipality'] }}</li>
+            <li *ngIf="valve['sector.cve_sec'] === 'Sin sector'"> Sector: {{valve['sector.cve_sec']}}</li>
+            <li *ngIf="valve['sector.cve_sec']">Sector: {{valve['sector.cve_sec']}} </li>
+            <li>Colonia: {{ valve['settlement.settlement'] }}</li>
+            <li>Calle: {{ valve.street }}</li>
+            <li>Entre Calle: {{ valve.btwFirstStreet }}</li>
+            <li>Y Calle: {{ valve.btwSecondStreet }}</li>
+            <li>Esquina: {{ valve.corner }}</li>
+            <li>Referencia: {{ valve.reference }}</li>
+            <li>Tipo de Red: {{ valve['road.type'] }}</li>
+            <li>Ubicación: {{ valve['valves_location.location'] }}</li>
+        </ul>
+        <p-divider></p-divider>
+        <div style="text-align: center; font-weight: bold">Datos de la Valvula</div>
+        <br />
+        <ul>
+            <li>Diámetro: {{ valve['diameter.diameter']}} "</li>
+            <li>Tipo de Valvula: {{ valve['valves_type.type'] }}</li>
+            <li *ngIf="valve['directionClose'] === true"> Dirección de cierre: Izquierda</li>
+            <li *ngIf="valve['directionClose'] === false">Dirección de cierre: Derecha</li>
+        </ul>
+        <!--   <td>
+                            <div *ngIf="valve.direction === true">Derecha</div>
+                            <div *ngIf="valve.direction === false">Izquierda</div>
+                        </td> -->
+
+        <p-divider></p-divider>
+        <div style="text-align: center; font-weight: bold">
+            Registro de Movimientos
+        </div>
+        <br />
+
+
+        <div class="card-body">
+            <p-toolbar styleClass="p-mb-4">
+                <ng-template pTemplate="right">
+                    <p-button [routerLink]="['/valveMovement/registervalvesAction',valve.id]" icon="pi pi-plus" styleClass="p-button-sm p-button-raised p-button-secondary" label="Registrar nuevo movimiento" [style]="{'margin-left': '.4em'}"></p-button>
+                </ng-template>
+            </p-toolbar>
+
+            <p-toolbar styleClass="p-mb-4">
+                <ng-template pTemplate="left">
+                    <input pInputText type="text" (input)="dt1.filter($event.target.value, 'createAtnew', 'contains')" [value]="$any(dt1.filters['createAtnew'])?.value" placeholder="Busqueda por Fecha AAAA-MM-DD" class="p-column-filter p-inputtext-sm" />
+                </ng-template>
+            </p-toolbar>
+
+            <p-table styleClass="p-datatable-sm p-datatable-striped p-datatable-responsive-demo p-datatable-gridlines" #dt1 [value]="valveMovement" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" currentPageReportTemplate="Registros del {first} al {last} de {totalRecords} Registros"
+                [scrollable]="true" dataKey="id" scrollHeight="500px" [style]="{ width: '100%' }" [rowsPerPageOptions]="[5,10]" [lazy]="true" (onLazyLoad)="loadValves($event)" totalRecords="{{totalRecords}}" [loading]="loadingTable">
+                <ng-template pTemplate="colgroup" let-columns>
+                    <colgroup class="valve_responsive">
+                        <col style="width:110px">
+                        <col style="width:110px">
+                        <col style="width:120px">
+                        <col style="width:150px">
+                        <col style="width:170px">
+                        <col style="width:170px">
+                        <col style="width:150px">
+                        <col style="width:150px">
+                    </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header" let-rowData="rowData">
+                    <tr>
+                        <th style="text-align: center">
+                            Usuario
+                        </th>
+                        <th style="text-align: center">
+                            Vueltas
+                        </th>
+                        <th style="text-align: center">
+                            Acción
+                        </th>
+                        <th style="text-align: center">
+                            Cerrado Total
+                        </th>
+                        <th style="text-align: center">
+                            Motivo
+                        </th>
+                        <th style="text-align: center">
+                            Observaciones
+                        </th>
+                        <th style="text-align: center">
+                            Fecha
+                        </th>
+                        <th style="text-align: center">Acciones</th>
+                    </tr>
+                    <!--    <tr>
+                        <th>
+                            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'municipality', 'contains')" [value]="dt1.filters['municipality']?.value" placeholder="Busqueda por Alcaldía" class="p-column-filter p-inputtext-sm">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'settlement', 'contains')" [value]="dt1.filters['settlement']?.value" placeholder="Busqueda por Colonia" class="p-column-filter p-inputtext-sm">
+                        </th>
+                        <th>
+                            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'createAtnew', 'contains')" [value]="dt1.filters['createAtnew']?.value" placeholder="Busqueda por Telefono" class="p-column-filter p-inputtext-sm">
+                        </th>
+                        <th></th>
+                    </tr> -->
+                </ng-template>
+                <ng-template pTemplate="body" let-valve let-i>
+                    <tr [pSelectableRow]="valve">
+                        <td style="text-align: center;">{{ valve.creator.username }}</td>
+                        <td style="text-align: center;">{{ valve.turns }}</td>
+                        <td style="text-align: center;">
+                            <div *ngIf="valve.action === true">
+                                <span style="color: white;" class="badge {{ valve.action === true ? 'bg-danger' : 'bg-danger' }}">{{valve.action === true  ? "Cierre" : "" }}</span>
+                            </div>
+                            <div style="color: white;" *ngIf="valve.action === false">
+                                <span class="badge {{ valve.action === false ? 'bg-warning' : 'bg-info' }}">{{ valve.action === false ? "Apertura" : "" }}</span>
+                            </div>
+                        </td>
+                        <td style="text-align: center;">
+                            <div *ngIf="valve.full === '1'">Abierto Completamente</div>
+                            <div *ngIf="valve.full === '2'">Flujo Regulado</div>
+                            <div *ngIf="valve.full === '3'">Cerrado Completamente</div>
+                        </td>
+                        <td style="text-align: center;">{{ valve.reason.reason }}</td>
+                        <td style="text-align: center;">{{ valve.observation }}</td>
+                        <td style="text-align: center;">{{ valve.createAtnew }}</td>
+                        <td style="text-align: center">
+                            <button style="align-items: center; text-align: center" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger p-mr-2" (click)="deleteValveMovement(valve, i)"></button>
+                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-warning p-mr-2" [routerLink]="['/valveMovement/valvesActionEdit', valve.id]"></button> &nbsp;
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td [attr.colspan]="9">
+                            No se encontraron registros.
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="paginatorleft"> </ng-template>
+                <ng-template pTemplate="paginatorright"> </ng-template>
+            </p-table>
+        </div>
+        <p-divider></p-divider>
+        <div style="text-align: center; font-weight: bold">
+            Esquema de la Válvula
+        </div>
+        <br>
+        <div aling="center" class="marco_foto" style="text-align: center;">
+            <img class="responsive" [src]="imageurl" alt="">
+        </div>
+    </p-card>
+</div>
+<br />

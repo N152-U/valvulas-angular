@@ -1,0 +1,55 @@
+<nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark" style="background-color: #e3f2fd;">
+    <a class="navbar-brand mx-auto" href="#">
+        <img src="assets/images/sacmexL.png" class="d-inline-block align-top" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="mr-auto"></div>
+        <ul *ngIf="hasUser" class="navbar-nav my-2 my-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" [routerLink]="['valve/table']">Planos <span class="sr-only">Catalogo</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" [routerLink]="['valve/table']">Catalogo <span class="sr-only">Catalogo</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" [routerLink]="['#']">Registro Diario<span class="sr-only">Registro Diario</span></a>
+            </li>
+            <!--             <li class="nav-item active">
+
+                <a class="nav-link" [routerLink]="['map']">Mapa <span class="sr-only">Catalogo</span></a>
+            </li> -->
+            <li class="nav-item dropdown">
+                <a *ngIf="hasUser" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-display="static" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ user.firstName }}
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="navbarDropdown">
+                    <div>
+                        <div *ngIf="user.firstName=='ADMINISTRADOR'">
+                            <a class="dropdown-item" routerLinkActive="active" [routerLink]="['managment/manage-roles']">Administrar roles
+                    y permisos</a>
+                        </div>
+                    </div>
+                    <div>
+                        <div *ngIf="user.firstName=='ADMINISTRADOR'">
+                            <a class="dropdown-item" routerLinkActive="active" [routerLink]="['managment/manage-users']">Administrar
+                    cuentas de usuario</a>
+                        </div>
+
+                    </div>
+
+                    <hr class="dropdown-divider" />
+                    <a class="dropdown-item text-danger" href="#" (click)="logOut()"><i class="fas fa-power-off"></i> Cerrar
+                sesión</a>
+                </div>
+            </li>
+        </ul>
+        <!--  <ul *ngIf="!hasUser" class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['about']">Contacto </a>
+            </li>
+        </ul> -->
+    </div>
+</nav>
