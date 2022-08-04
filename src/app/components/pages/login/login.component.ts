@@ -69,10 +69,11 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl("/home");
         },
         (resErr) => {
-          console.log(resErr);
+          console.log("fdfdf",resErr);
           let message;
           if (resErr.status === 400)
-            message = resErr.error.validation['body'].message
+          //message = resErr.error.validation['body'].message
+          message = resErr.error.message
           else if (resErr.status === 500)
             message = resErr.error.message;
           else
@@ -99,7 +100,7 @@ export class LoginComponent implements OnInit {
             console.log(resErr);
             let message;
             if (resErr.status === 400)
-              message = resErr.error.validation['body'].message
+              message = resErr.error.message
             else if (resErr.status === 500)
               message = resErr.error.message;
             else

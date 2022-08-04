@@ -25,6 +25,8 @@ export class ValveMovementComponent implements OnInit {
   users: UserModel[] = [];
   reason: CatalogModule[] = [];
   loading: boolean;
+  close: number;
+  open: number;
 
   public directions = [
     { id: 0, name: "Izquierda" },
@@ -65,6 +67,7 @@ export class ValveMovementComponent implements OnInit {
       direction: ["", [Validators.required]],
       turns: ["", [Validators.required]],
       full: ["", []],
+      /* fullClose: ["", []], */
     });
 
     this.aFormGroup.valueChanges.subscribe((data) =>
@@ -80,6 +83,40 @@ export class ValveMovementComponent implements OnInit {
 
   onValveMovementFormChange(date) {
     this.valve = date;
+  }
+
+  OpenCloseChange(event) {
+    
+    console.log("evento", event.value.id)
+      // eslint-disable-next-line no-empty
+      if (event.value.id == 0) {
+
+        this.open = 0;
+        this.close = 0;
+
+        console.log("Apertura",  this.open);
+     
+      } else{
+       
+        this.close = 1;
+        this.open = 1;
+        console.log("Cierre",  this.close);
+      }
+  }
+
+  reasonOnchenge(event){
+       console.log("rason", event.value.id)
+       // eslint-disable-next-line no-empty
+       if (event.value.id == 4) {
+        this.otherReasons.setValue(null);
+        this.otherReasons.setValidators([Validators.required]);
+        this.otherReasons.enable();
+       } else{
+         this.otherReasons.setValue(null);
+         this.otherReasons.setValidators([]);
+         this.otherReasons.disable();
+         
+       }
   }
 
   createValvesMovement() {
@@ -98,7 +135,7 @@ export class ValveMovementComponent implements OnInit {
         if(formData.full == 0){
           formData.full = Number(2);
         }else{
-          formData.full = Number(formData.full);
+          formData.full = Number( formData.full);
         }
         formData.valvesId = this.valves.id;
         delete formData["id"];
@@ -108,7 +145,7 @@ export class ValveMovementComponent implements OnInit {
             Swal.fire({
               position: "center",
               icon: "success",
-              title: "Movimiento de Válvula guardado correctamente",
+              title: "Movimiento de válvula guardado ",
               showConfirmButton: false,
             });
             this.router.navigate(["/valve/Detail", this.valves.id]);
@@ -138,6 +175,10 @@ export class ValveMovementComponent implements OnInit {
     });
   }
 
+ /*  get fullClose() {
+    return this.aFormGroup.get("fullClose");
+  }
+ */
   get valvesId() {
     return this.aFormGroup.get("valvesId");
   }

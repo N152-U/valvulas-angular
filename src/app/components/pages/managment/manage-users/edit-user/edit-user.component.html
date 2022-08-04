@@ -5,7 +5,7 @@
         <form [formGroup]="editDetailGroup" (ngSubmit)="UpdateUser()" class="needs-validation center" novalidate>
             <div class="form-row">
                 <div class="col-md-6 mb-3">
-                    <label>Role*</label>
+                    <label>Rol*</label>
                     <p-dropdown #ddroles [options]="roles" [style]="{ width: '100%' }" scrollHeight="400px" id="hashRole" formControlName="hashRole" optionLabel="role" [filter]="true" filterBy="role" name="hashRole" [showClear]="true" placeholder="Seleccione el rol" (onChange)="roleChanged()"
                         [class]="{
               'is-invalid': hashRole.invalid && (hashRole.dirty || hashRole.touched),
@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="col-md-6 mb-3">
-                    <label>Usuario*</label>
+                    <label>Correo*</label>
                     <input type="text" class="form-control" placeholder="Usuario" id="username" name="username" formControlName="username" [class]="{
               'is-invalid':
                 username.invalid &&

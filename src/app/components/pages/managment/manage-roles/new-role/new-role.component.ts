@@ -58,7 +58,6 @@ export class NewRoleComponent implements OnInit {
       showDenyButton: true,
       confirmButtonText: `Confirmar`,
       denyButtonText: `Cancelar`,
-      
     }).then((result) => {
       if (result.isConfirmed) {
         this.api.CreateRole(this.aFormGroup.value).subscribe((resp) => {
@@ -74,12 +73,13 @@ export class NewRoleComponent implements OnInit {
           }, 1500);
         },
         (resErr) => {
-          console.log(resErr);
+          console.log("error",resErr);
           let message;
           if (resErr.status === 400)
-            message = resErr.error.validation['body'].message
+            message = resErr.error
+            
           else if (resErr.status === 500)
-            message = resErr.error.message;
+            message = resErr.error;
           else
             message = "Error del servidor"
           Swal.fire({
@@ -94,6 +94,7 @@ export class NewRoleComponent implements OnInit {
       }
     });
   }
+
   get roleName() {
     return this.aFormGroup.get("roleName");
   }

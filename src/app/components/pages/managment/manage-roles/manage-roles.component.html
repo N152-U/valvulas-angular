@@ -1,75 +1,48 @@
 <router-outlet></router-outlet>
 
-  
-    <div *ngIf="router.url == '/managment/manage-roles'">
-      <div class="card centrar">
+
+<div *ngIf="router.url == '/managment/manage-roles'">
+    <div class="card centrar">
         <header>
-          <h1 class="text-center text-black">Administración de roles</h1>
+            <h1 class="text-center text-black">Administración de roles</h1>
         </header>
         <p-toolbar styleClass="p-mb-4">
-         
-          <ng-template pTemplate="left"> 
-    
-            <p-button 
-              styleClass="p-button-sm p-button-success"
-              label="Nuevo Registro"
-              icon="pi pi-plus"
-              [routerLink]="['new-role']"
-            ></p-button> 
-          </ng-template>
-       
-          <ng-template pTemplate="right">
-            <p-button
-              styleClass="p-button-sm"
-              label="Inicio"
-              [routerLink]="['home']"
-            ></p-button>
-          </ng-template>
+
+            <ng-template pTemplate="left">
+
+                <p-button styleClass="p-button-sm p-button-success" label="Nuevo Registro" icon="pi pi-plus" [routerLink]="['new-role']"></p-button>
+            </ng-template>
+
+            <ng-template pTemplate="right">
+                <p-button styleClass="p-button-sm" label="Inicio" [routerLink]="['home']"></p-button>
+            </ng-template>
         </p-toolbar>
         <br />
-        <p-table
-          styleClass="p-datatable-sm p-datatable-striped p-datatable-responsive-demo"
-          #dt1
-          [value]="roles"
-          [paginator]="true"
-          [rows]="10"
-          [showCurrentPageReport]="true"
-          currentPageReportTemplate="Registros del {first} al {last} de {totalRecords} Registros"
-          [scrollable]="true"
-          dataKey="id"
-          scrollHeight="500px"
-          [style]="{ width: '100%' }"
-          [rowsPerPageOptions]="[5, 10, 25, 50]"
-        >
-          <ng-template pTemplate="header" let-rowData="rowData">
-            <tr>
-              <th pSortableColumn="role">Role <p-sortIcon></p-sortIcon></th>
-              <th>Status</th>
-              <th>Acciones</th>
-            </tr>
-            <tr>
-              <th>
-                <input
-                  pInputText
-                  type="text"
-                  (input)="dt1.filter($event.target.value, 'role', 'contains')"
-                  [value]="$any(dt1.filters['role'])?.value"
-                  placeholder="Busqueda por role"
-                  class="p-column-filter p-inputtext-sm"
-                />
-              </th>
-              <th></th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-role let-i>
-            <tr [pSelectableRow]="role">
-              <td>{{ role.role }}</td>
-              <td>
-                <span
-                  class="badge {{
+        <p-table styleClass="p-datatable-sm p-datatable-striped p-datatable-responsive-demo" #dt1 [value]="roles" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" currentPageReportTemplate="Registros del {first} al {last} de {totalRecords} Registros"
+            [scrollable]="true" dataKey="id" scrollHeight="500px" [style]="{ width: '100%' }" [rowsPerPageOptions]="[5, 10, 25, 50]">
+            <ng-template pTemplate="header" let-rowData="rowData">
+                <tr>
+                    <th pSortableColumn="role">Rol
+
+                        <p-sortIcon></p-sortIcon>
+                    </th>
+                    <th>Estatus</th>
+                    <th>Acciones</th>
+                </tr>
+                <tr>
+                    <th>
+                        <input pInputText type="text" (input)="dt1.filter($event.target.value, 'role', 'contains')" [value]="$any(dt1.filters['role'])?.value" placeholder="Busqueda por role" class="p-column-filter p-inputtext-sm" />
+                    </th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-role let-i>
+                <tr [pSelectableRow]="role">
+                    <td>{{ role.role }}</td>
+                    <td>
+                        <span class="badge {{
                     role.status == 1 ? 'bg-success' : 'bg-warning'
-                  }}"
-                  >{{ role.status == 1 ? "ACTIVO" : "BLOQUEADO" }}</span
+                  }}">{{ role.status == 1 ? "ACTIVO" : "BLOQUEADO" }}</span
                 >
               </td>
 

@@ -130,10 +130,11 @@ export class NewUserComponent implements OnInit {
           }, 1300);
         },
         (resErr) => {
-          console.log(resErr);
+        
           let message;
           if (resErr.status === 400)
-            message = resErr.error.validation['body'].message
+            message = resErr.error.message
+            
           else if (resErr.status === 500)
             message = resErr.error.message;
           else

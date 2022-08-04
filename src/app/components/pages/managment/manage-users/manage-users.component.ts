@@ -51,9 +51,24 @@ export class ManageUsersComponent implements OnInit {
             window.location.reload();
           }, 1300);
         });
+      }else
+      {
+      
+        /*  result.dismiss === Swal.DismissReason.cancel */
+         if (result.isDenied) {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Usuario no eliminado",
+            showConfirmButton: true,
+     
+          
+          });
+        }
       }
     });
   }
+  
   next() {
     this.first = this.first + this.rows;
   }

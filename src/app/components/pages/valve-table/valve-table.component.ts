@@ -54,13 +54,22 @@ export class ValveTableComponent implements OnInit {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Vàlvula eliminada",
+          title: "Válvula eliminada",
           showConfirmButton: false,
+        }); setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      }if (resp.isDenied) {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Válvula no eliminada",
+          showConfirmButton: true,
         });
-      }
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
+        
+      } 
+   
+      
     });
   }
 

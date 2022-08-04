@@ -24,6 +24,18 @@ export class ManageUsersService {
       })
     );
   }
+  GetDetailUser() {
+    return this.http
+      .get<{ payload: UserModel }>(`${environment.apiUrl}user/getDetail`)
+      .pipe(
+        map((res) => {
+          return res.payload;
+        })
+      );
+  }
+  UpdatePassword(hashUser: string, params: any) {
+    return this.http.put(`${environment.apiUrl}user/updatePassword/${hashUser}`, params);
+  }
   /*  FUNCION GET GetAllUsers */
   GetAllUsers(): Observable<any> {
     return this.http

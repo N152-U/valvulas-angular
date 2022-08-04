@@ -10,7 +10,7 @@
 
                 <div class="p-field p-col-12 p-md-3">
                     <label for="dropdown">Apertura o Cierre</label>
-                    <p-dropdown placeholder="Apertura o Cierre" [options]="actions" inputId="dropdown" [autoDisplayFirst]="false" optionLabel="name" formControlName="action" [class]="{
+                    <p-dropdown (onChange)="OpenCloseChange($event)" placeholder="Apertura o Cierre" [options]="actions" inputId="dropdown" [autoDisplayFirst]="false" optionLabel="name" formControlName="action" [class]="{
                                 'is-invalid':
                                 action.invalid && (action.dirty || action.touched),
                                 'is-valid': action.valid
@@ -23,7 +23,7 @@
 
                 <div class="p-field p-col-12 p-md-3">
                     <label for="dropdown">Motivo</label>
-                    <p-dropdown placeholder="Motivo" [options]="reason" inputId="dropdown" [autoDisplayFirst]="false" optionLabel="reason" formControlName="reasonId" [class]="{
+                    <p-dropdown (onChange)="reasonOnchenge($event)" placeholder="Motivo" [options]="reason" inputId="dropdown" [autoDisplayFirst]="false" optionLabel="reason" formControlName="reasonId" [class]="{
                                 'is-invalid':
                                 reasonId.invalid && (reasonId.dirty || reasonId.touched),
                                 'is-valid': reasonId.valid
@@ -56,13 +56,13 @@
                 </div>
 
                 <div class="p-field p-col-12 p-md-3 p-field-radiobutton">
-                    <p-checkbox name="groupname" value="1" formControlName="full"></p-checkbox>
+                    <p-checkbox name="groupname" value="1" formControlName="full" id="open"></p-checkbox>
 
                     <label for="full">Abierto Completamente</label>
                 </div>
 
                 <div class="p-field p-col-12 p-md-3 p-field-radiobutton">
-                    <p-checkbox name="groupname" value="3" formControlName="full"></p-checkbox>
+                    <p-checkbox name="groupname" value="3" formControlName="full" id="close"></p-checkbox>
                     <label for="full">Cerrado Completamente</label>
                 </div>
 

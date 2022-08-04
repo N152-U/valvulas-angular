@@ -43,7 +43,7 @@
                         </p-dropdown>
                     </div>
                     <div class="p-field p-col-12 p-md-3">
-                        <label for="lastname1">Status</label>
+                        <label for="lastname1">Estatus</label>
                         <p-dropdown [options]="movementStatus" [style]="{'width':'100%'}" appendTo="body" (onChange)="dt1.filter($event.value, 'movementStatus.id', 'contains')" optionLabel="name" [filter]="true" [showClear]="true" class="p-column-filter p-inputtext-sm" placeholder="Selecciona un estado">
                             <ng-template let-status pTemplate="item">
                                 <div class="status-item">
@@ -75,7 +75,7 @@
             <ng-template pTemplate="header" let-rowData="rowData">
                 <tr>
                     <th style="text-align: center">
-                        Id Valvula
+                        Id V&aacute;lvula
                     </th>
                     <th style="text-align: center">
                         Sector
@@ -87,7 +87,7 @@
                         Acción
                     </th>
                     <th style="text-align: center">
-                        Status
+                        Estatus
                     </th>
                     <th style="text-align: center">
                         Vueltas
@@ -176,7 +176,7 @@
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td [attr.colspan]="9">
+                    <td [attr.colspan]="10">
                         No se encontraron registros.
                     </td>
                 </tr>
@@ -187,4 +187,4 @@
     </div>
 </div>
 <!-- 
-<a href="http://valvulas.sacmex.cdmx.gob.mx/pdfs/Planos%20PDF%20Iztapalapa%2019/Planos%20PDF%20Iztapalapa%2019/YDRAY-PR-SEC-13-4-AB_1-de-2-13-3.pdf" target="_blank">Download</a> -->
+<a href="http://10.11.11.188/pdfs/Planos%20PDF%20Iztapalapa%2019/Planos%20PDF%20Iztapalapa%2019/YDRAY-PR-SEC-13-4-AB_1-de-2-13-3.pdf" target="_blank">Download</a> -->

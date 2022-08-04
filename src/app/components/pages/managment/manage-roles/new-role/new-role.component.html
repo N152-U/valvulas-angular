@@ -3,9 +3,9 @@
         <form (ngSubmit)="save()" #f="ngForm" [formGroup]="aFormGroup" class="needs-validation center" novalidate>
             <div class="form-row">
                 <div class="col-md-12">
-                    <label>Nombre del role*</label>
+                    <label>Nombre del rol*</label>
                     <div class="input-group">
-                        <input (onChange)="roleChanged()" id="role" name="role" type="text" class="form-control" formControlName="roleName" placeholder="Nombre del role" [class]="{
+                        <input (onChange)="roleChanged()" id="role" name="role" type="text" class="form-control" formControlName="roleName" placeholder="Nombre del rol" [class]="{
                 'is-invalid':
                   roleName.invalid &&
                   (roleName.dirty ||

@@ -28,7 +28,9 @@ export class ValveMovementEditComponent implements OnInit {
   users: UserModel[] = [];
   reason: CatalogModule[] = [];
   loading: boolean;
-
+  close: number;
+  open: number;
+  prueba:any;
   public actions = [
     { id: 0, name: "Apertura" },
     { id: 1, name: "Cierre" },
@@ -80,8 +82,11 @@ export class ValveMovementEditComponent implements OnInit {
       this.full.setValue(data.full);
       this.action.setValue(this.actions[data.action?1:0]);
       this.reasonId.setValue(data.reason); 
+      this.prueba= data;
+      console.log(" hola",this.prueba)
       
      }
+      
     );
   }
 
@@ -90,7 +95,36 @@ export class ValveMovementEditComponent implements OnInit {
     console.log(this.aFormGroup)
 
   }
+  OpenCloseChange(event) {
+       
+      if (event.value.id == 0) {
 
+        this.open = 0;
+        this.close = 0;
+
+        console.log("Apertura",  this.open);
+     
+      } else{
+       
+        this.close = 1;
+        this.open = 1;
+        console.log("Cierre",  this.close);
+      }
+  }
+  reasonOnchenge(event){
+    console.log("rason", event.value.id)
+    // eslint-disable-next-line no-empty
+    if (event.value.id == 4) {
+     this.otherReasons.setValue(null);
+     this.otherReasons.setValidators([Validators.required]);
+     this.otherReasons.enable();
+    } else{
+      this.otherReasons.setValue(null);
+      this.otherReasons.setValidators([]);
+      this.otherReasons.disable();
+      
+    }
+}
    updateValveMovement() {
     Swal.fire({
       title: "¿Desea guardar los cambios?",

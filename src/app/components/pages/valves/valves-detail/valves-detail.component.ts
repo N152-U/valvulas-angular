@@ -72,13 +72,24 @@ export class ValvesDetailComponent implements OnInit {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Movimiento eliminado correctamente",
+          title: "Movimiento eliminado",
           showConfirmButton: false,
         });
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      }  else if (resp.isDenied) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Movimiento no eliminado",
+          showConfirmButton: true,
+        
       }
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
+      
+     );
+  }
+    
     });
   }
 

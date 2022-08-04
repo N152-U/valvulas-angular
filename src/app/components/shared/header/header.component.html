@@ -9,10 +9,10 @@
         <div class="mr-auto"></div>
         <ul *ngIf="hasUser" class="navbar-nav my-2 my-lg-0">
             <li class="nav-item active">
-                <a class="nav-link" [routerLink]="['valve/table']">Planos <span class="sr-only">Catalogo</span></a>
+                <a class="nav-link" href="https://valvulas.sacmex.cdmx.gob.mx/pdfs/" target="_blank">Planos <span class="sr-only">Catálogo</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" [routerLink]="['valve/table']">Catalogo <span class="sr-only">Catalogo</span></a>
+                <a class="nav-link" [routerLink]="['valve/table']">Catalogo <span class="sr-only">Catálogo</span></a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" [routerLink]="['#']">Registro Diario<span class="sr-only">Registro Diario</span></a>
@@ -39,6 +39,13 @@
                         </div>
 
                     </div>
+                    <div>
+                        <div >
+                            <a class="dropdown-item" routerLinkActive="active" [routerLink]="['profile']">Mi cuenta</a>
+                        </div>
+
+                    </div>
+                    
 
                     <hr class="dropdown-divider" />
                     <a class="dropdown-item text-danger" href="#" (click)="logOut()"><i class="fas fa-power-off"></i> Cerrar

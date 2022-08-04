@@ -1,11 +1,11 @@
 <router-outlet></router-outlet>
 
 <div class="d-flex justify-content-center cardF">
-    <p-card header="Edición de role" styleClass="p-card-shadow">
+    <p-card header="Edición de rol" styleClass="p-card-shadow">
         <form (ngSubmit)="UpdateRole()" [formGroup]="formRoleDetailGroup" class="needs-validation center" novalidate>
             <div class="form-row">
                 <div class="col-md-12 mb-3">
-                    <label>Nombre del Role*</label>
+                    <label>Nombre del Rol*</label>
                     <div class="input-group">
                         <input id="roleName" name="roleName" type="text" class="form-control" formControlName="roleName" placeholder="Nombre del role" [class]="{
                 'is-invalid':

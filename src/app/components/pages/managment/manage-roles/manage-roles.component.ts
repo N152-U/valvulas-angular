@@ -73,6 +73,15 @@ export class ManageRolesComponent implements OnInit {
             window.location.reload();
           }, 1300);
         });
+      }if (result.isDenied) {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Rol no eliminado",
+          showConfirmButton: true,
+        });
+
+        
       }
     });
   }
